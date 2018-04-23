@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SCDM: Drive Supercar</title>
+
+    <!-- Bootstrap CSS 4.0 Beta -->
+    <link rel="stylesheet" href="./bootstrap4/css/bootstrap.css">
+    <link rel="stylesheet" href="./bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./stylesheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Aldrich|Jura" rel="stylesheet">
+    <!--    imagehover.css  from   https://github.com/ciar4n/imagehover.css-->
+    <link rel="stylesheet" href="./imagehover.min.css">\
+    <!-- custom -->
+
+    <!--    firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container mx-0 mx-sm-auto">
+            <a class="navbar-brand" id='logo' href="index.html">SCDM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nave-item my-auto">
+                        <!--                        <a class="nav-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rental.html">Rental</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="members.html">Members</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nave-item my-auto">
+                        <!--                        <a class="nav-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
+                    </li>
+                </ul>
+            </div>
+            <a class="navbar-nav" id='me' href="#" data-toggle="modal" data-target="#signinModal"><img src="https://png.icons8.com/user/material/30/A9A9A9" style="margin-bottom: 0px; padding-bottom: 0px;" id="me_icon"></a>
+
+            <!--            sign in/up modal -->
+            <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="signinModalLabel">Sign-in</h5>
+                            <button type="button" id="auth_modal_close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="email" class="col-form-label">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-form-label">Password:</label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="signup" style="display: none;" onclick="signup()" data-dismiss="modal" data-confirm="Your account has been created.">Sign-up</button>
+                            <a id="first_time" class="first_time">First Time?</a>
+                            <button type="button" class="btn btn-primary" id="signin" onclick="signin()" data-dismiss="modal">Sign-in</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            Profile modal -->
+            <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="profileModalLabel">Profile</h5>
+                            <button type="button" id="auth_modal_close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="needs-validation">
+                                <div class="row mx-auto">
+                                    <div class="form-group mt-1 upload_img" id="upload_profile_img">
+                                        <label for="img-profile" class="custom-file"> Upload Profile Picture
+                                    <input type="file" id="img-profile" class="form-control-file" required>
+                                  </label>
+                                    </div>
+
+                                    <div class="container mx-auto">
+                                        <img id="prof_img_preview" class="ml-auto file_preview img-thumbnail" style="width:200px;height:200px;">
+
+                                        <img class="img_edit_icon" id="prof_img_edit_icon" src="https://png.icons8.com/edit/windows/30/A9A9A9" style="display:none;">
+                                    </div>
+                                </div>
+                                <div class="row mx-auto">
+                                    <div class="form-group">
+                                        <label for="profile_first_name" class="col-form-label">First Name:</label>
+                                        <input type="text" class="form-control" id="fn" name="firstname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile_last_name" class="col-form-label ml-4">Last Name:</label>
+                                        <input type="text" class="form-control ml-4" id="ln" name="ln" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile_phonenumber" class="col-form-label">Phone Number:</label>
+                                    <input type="text" class="form-control input-medium bfh-phone" id="pn" name="pn" required>
+                                </div>
+
+
+                                <!--CAR PROFILE-->
+                                <div id="car_profile">
+                                    <div class="row mx-auto">
+                                        <div class="form-group upload_img mt-1" id="upload_car_img">
+                                            <label for="car-profile" class="custom-file"> Upload Picture of your car
+                                    <input type="file" id="car-profile" class="form-control-file" required>
+                                  </label>
+                                        </div>
+                                        <div class="container mx-auto">
+                                            <img id="car_img_preview" class="ml-auto file_preview img-thumbnail" style="width:200px;height:200px;">
+
+                                            <img class="img_edit_icon" id="car_img_edit_icon" src="https://png.icons8.com/edit/windows/30/A9A9A9" style="display:none;">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mx-auto">
+                                        <label for="car_model" class="col-form-label">Model Name:</label>
+                                        <input type="text" class="form-control" id="car_model" name="car_model" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rent" class="col-form-label">Would you like to rent out your car?:</label>
+                                        <div class="rent_response">
+                                            <button type="button" class="btn btn-primary" id="rent_yes" name="rent_yes" required>Yes!</button>
+                                            <button type="button" class="btn btn-primary" id="rent_no" name="rent_no"> No</button>
+                                        </div>
+                                    </div>
+                                    <div class="input-group" id="rent_div" style="display:none;">
+                                        <label for="rent_per_day" class="col-form-label">Rent Per Day?</label>
+                                        <span class="input-group-addon">$</span>
+                                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="rent_per_day" name="rent_per_day">
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="profileSave" onclick="save()">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!--      this is header-->
+    <header>
+
+        <div class="row" id="box-search">
+            <div class="thumbnail text-center">
+                <img src="./img/landing.jpeg" alt="landing img" class="img-fluid">
+
+                <div class="caption">
+                    <h1 class="neon">WANT TO DRIVE?</h1>
+                    <h3 class="neon">This is the right place</h3>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--    Introducing Rent a car-->
+    <div class="container mx-auto">
+        <div class="row mt-4">
+            <div class="col-sm-12 col-md-12 col-lg-6 mt-4">
+                <h1 class="display-5 text-uppercase text-center mb-4 ">Need a Supercar?</h1>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+            </div>
+            <img src="./img/landing2.jpg" alt="pic" class="img-thumbnail col-lg-6 ml-auto mt-4 " id="rentalimg">
+        </div>
+    </div>
+    <!--    upcoming events 3-->
+    <div class="container">
+        <h1 class="text-uppercase text-center my-4 ">upcoming events</h1>
+        <div class="row">
+            <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#upcoming_event1">
+                <img class="card-img-top mt-3 hvr-grow" src="./img/manhattan_ride.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title ">Manhattan Ride</h4>
+                    <p class="card-text">October 20th 2017</p>
+                    <div class="join_mark_none">
+                        <p style="color:azure;">JOINED</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="upcoming_event1" tabindex="-1" role="dialog" aria-labelledby="upcoming_event1_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title mx-auto" id="upcoming_event1_label">Ride through skyscrappers</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <img src="./img/manhattan_ride.jpg" alt="modal-img" class="modal_img">
+                                <h5 class="ml-4 mt-3">Date: October 20th 2017</h5>
+                                <h5 class="ml-auto mr-4 mt-3">Location: Times Square</h5>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="join_text">
+                                    <p><img src="./img/portrait/1.jpg" alt="portrait1" class="rounded-circle" style="width:35px; height: 35px; margin-right:none;">
+                                        <img src="https://png.icons8.com/more/windows/50/A9A9A9" style="width:35px; height: 35px; padding-left:none; padding-right:5px;"></p>
+                                </div>
+                                <div class="joined_member" style="display:none;">
+                                    <img src="./img/portrait/1.jpg" alt="portrait1" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/2.jpg" alt="portrait2" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                    <img src="./img/portrait/3.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                </div>
+                                <button type="button" class="btn btn-secondary my-auto mr-2 ml-2 join">JOIN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#upcoming_event2">
+                <img class="card-img-top mt-3 hvr-grow" src="./img/manhattan_ride.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title ">Manhattan Ride</h4>
+                    <p class="card-text">November 20th 2017</p>
+                </div>
+            </div>
+
+            <div class="modal fade" id="upcoming_event2" tabindex="-1" role="dialog" aria-labelledby="upcoming_event2_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title mx-auto" id="upcoming_event2_label">Ride through skyscrappers</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <img src="./img/manhattan_ride.jpg" alt="modal-img" class="modal_img">
+                                <h5 class="ml-4 mt-3">Date: November 20th 2017</h5>
+                                <h5 class="ml-auto mr-4 mt-3">Location: Times Square</h5>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <img src="./img/portrait/2.jpg" alt="portrait1" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                <img src="./img/portrait/3.jpg" alt="portrait2" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                <img src="./img/portrait/1.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                <button type="button" class="btn btn-secondary my-auto mr-2 ml-2" data-dismiss="modal">JOIN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#upcoming_event3">
+                <img class="card-img-top mt-3 hvr-grow" src="./img/manhattan_ride.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title ">Manhattan Ride</h4>
+                    <p class="card-text">December 12th 2017</p>
+                </div>
+            </div>
+
+            <div class="modal fade" id="upcoming_event3" tabindex="-1" role="dialog" aria-labelledby="upcoming_event3_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title mx-auto" id="upcoming_event3_label">Ride through skyscrappers</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <img src="./img/manhattan_ride.jpg" alt="modal-img" class="modal_img">
+                                <h5 class="ml-4 mt-3">Date: December 12th 2017</h5>
+                                <h5 class="ml-auto mr-4 mt-3">Location: Times Square</h5>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <img src="./img/portrait/3.jpg" alt="portrait1" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                <img src="./img/portrait/1.jpg" alt="portrait2" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                <img src="./img/portrait/2.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                <button type="button" class="btn btn-secondary my-auto mr-2 ml-2" data-dismiss="modal">JOIN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Latest 3 events-->
+        <div class="container">
+            <h1 class="text-uppercase text-center my-4 ">Our latest events</h1>
+            <div class="row">
+                <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#latest_event1">
+                    <img class="card-img-top mt-3 hvr-grow" src="./img/manhattan_ride.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title ">City Ride</h4>
+                        <p class="card-text">September 20th 2017</p>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="latest_event1" tabindex="-1" role="dialog" aria-labelledby="latest_event1_label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mx-auto" id="latest_event1_label">Ride through skyscrappers</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <img src="./img/manhattan_ride.jpg" alt="modal-img" class="modal_img">
+                                    <h5 class="ml-4 mt-3">Date: September 20th 2017</h5>
+                                    <h5 class="ml-auto mr-4 mt-3">Location: Brooklyn</h5>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <img src="./img/portrait/1.jpg" alt="portrait1" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/2.jpg" alt="portrait2" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                    <img src="./img/portrait/3.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#latest_event2">
+                    <img class="card-img-top mt-3 hvr-grow" src="./img/manhattan_ride.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title ">City Ride</h4>
+                        <p class="card-text">August 20th 2017</p>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="latest_event2" tabindex="-1" role="dialog" aria-labelledby="latest_event2_label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mx-auto" id="latest_event2_label">Ride through skyscrappers</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <img src="./img/manhattan_ride.jpg" alt="modal-img" class="modal_img">
+                                    <h5 class="ml-4 mt-3">Date: August 20th 2017</h5>
+                                    <h5 class="ml-auto mr-4 mt-3">Location: Brooklyn</h5>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <img src="./img/portrait/1.jpg" alt="portrait1" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/2.jpg" alt="portrait2" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                    <img src="./img/portrait/3.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/2.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/1.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#latest_event3">
+                    <img class="card-img-top mt-3 hvr-grow" src="./img/manhattan_ride.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title ">FDR Ride</h4>
+                        <p class="card-text">August 7th 2017</p>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="latest_event3" tabindex="-1" role="dialog" aria-labelledby="latest_event3_label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title mx-auto" id="latest_event3_label">Ride through skyscrappers</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <img src="./img/manhattan_ride.jpg" alt="modal-img" class="modal_img">
+                                    <h5 class="ml-4 mt-3">Date: August 7th 2017</h5>
+                                    <h5 class="ml-auto mr-4 mt-3">Location: Chinatown</h5>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <img src="./img/portrait/1.jpg" alt="portrait1" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/2.jpg" alt="portrait2" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+
+                                    <img src="./img/portrait/3.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                    <img src="./img/portrait/1.jpg" alt="portrait3" class="rounded-circle mr-4" style="width:35px; height: 35px; margin-right:auto;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+    <!--<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>-->
+    <script type="text/javascript" src="./bootstrap4/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+
+    <script type="text/javascript" src="signin.js"></script>
+</body>
+
+</html>

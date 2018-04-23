@@ -1,0 +1,38 @@
+database:
+
+user.uid
+    joined_events
+        1:id
+        2:id
+        3:id
+        
+    profile info 
+        first name = fn
+        last name = ln
+        phone number = pn
+        What car do you have = carType
+        image of your car = img_car
+        profile picture = img_prof
+        rent out or nah= rent_out
+        how much for day? = per_day
+
+
+Events:
+    id = id
+    title = title 
+    date time = dateTime
+    location = location
+    joined = joined
+        user_ids
+            user.uids
+    description = event_desceription
+    
+    
+    
+    - when joining event : get the # of event joined/
+                            add to uid.joined_events.("#":"event.getId)
+    
+
+    
+
+

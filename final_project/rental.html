@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS 4.0 Beta -->
+    <link rel="stylesheet" href="./bootstrap4/css/bootstrap.css">
+    <link rel="stylesheet" href="./bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./stylesheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Aldrich|Jura" rel="stylesheet">
+    <!--    imagehover.css  from   https://github.com/ciar4n/imagehover.css-->
+    <link rel="stylesheet" href="./imagehover.min.css">\
+    <!-- custom -->
+
+    <!--    firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container mx-0 mx-sm-auto">
+            <a class="navbar-brand" id='logo' href="index.html">SCDM</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nave-item my-auto">
+                        <!--                        <a class="nav-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rental.html">Rental</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="members.html">Members</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nave-item my-auto">
+                        <!--                        <a class="nav-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
+                    </li>
+                </ul>
+            </div>
+            <a class="navbar-nav" id='me' href="#" data-toggle="modal" data-target="#signinModal"><img src="//png.icons8.com/user/material/30/A9A9A9" style="margin-bottom: 0px; padding-bottom: 0px;" id="me_icon"></a>
+
+            <!--            sign in/up modal -->
+            <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="signinModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="signinModalLabel">Sign-in</h5>
+                            <button type="button" id="auth_modal_close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="signin_name" class="col-form-label">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_password" class="col-form-label">Password:</label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="signup" style="display: none;" onclick="signup()" data-dismiss="modal" data-confirm="Your account has been created.">Sign-up</button>
+                            <a id="first_time" class="first_time">First Time?</a>
+                            <button type="button" class="btn btn-primary" id="signin" onclick="signin()" data-dismiss="modal">Sign-in</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <div class="jumbotron" style="background-image:url(./img/dark.jpg)">
+        <div class="container">
+            <h1 class="display-4" style="color:white;">Need a SUPERCAR to join SCDM?</h1>
+            <h4 style="color:white;">Rent a car for one day from our members!</h4>
+        </div>
+    </div>
+
+    <div class="container car_infos">
+        <div class="row">
+
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <!--<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>-->
+    <script type="text/javascript" src="./bootstrap4/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="signin.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="rent.js"></script>
+</body>
+
+</html>
+
+
+<!--<div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#upcoming_event1">
+                <img class="card-img-top mt-3 hvr-grow profile_pic" src="./img/cars/mclaren.jpg" alt="Card image cap" id="first_car_img">
+                <div class="card-body">
+                    <h4 class="card-title">McLaren 650S Spyder</h4>
+                    <p class="card-text">Per day: $500</p>
+                </div>
+            </div>
+
+            <div class="modal fade" id="upcoming_event1" tabindex="-1" role="dialog" aria-labelledby="upcoming_event1_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title mx-auto" id="upcoming_event1_label">McLaren MSO 650S Spyder</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="./img/cars/mclaren_modal.jpg" alt="modal-img" class="modal_img">
+                            <h5 class="ml-4 mt-3">Owner: Dong-ha</h5>
+                            <!--                                add tooltip with img-->
+<!-- <h5 class="ml-4 mt-3">Per day: $500</h5>
+                        </div>
+                        <div class="modal-footer">
+
+                            <div class="row">
+                                <p style="margin-right: auto;">Ask Dong-ha for availability</p>
+                                <!--                              <button type="button" class="ask_button btn btn-secondary my-auto mr-2 ml-2" data-dismiss="modal" onclick="ask_form()">ASK</button>-->
+<!--
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#upcoming_event2">
+                <img class="card-img-top mt-3 hvr-grow" src="./img/cars/bmwi8.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title ">BMW i8</h4>
+                    <p class="card-text">Per day: $400</p>
+                </div>
+            </div>
+
+            <div class="modal fade" id="upcoming_event2" tabindex="-1" role="dialog" aria-labelledby="upcoming_event2_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title mx-auto" id="upcoming_event2_label">BMW i8</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="./img/cars/bmwi8_modal.jpg" alt="modal-img" class="modal_img">
+                            <h5 class="ml-4 mt-3">Owner: Dong-ha</h5>
+                            <!--                                add tooltip with img-->
+<!--
+                            <h5 class="ml-4 mt-3">Per day: $400</h5>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <p style="margin-right: auto;">Ask Dong-ha for availability</p>
+                                <button type="button" class="btn btn-secondary my-auto mr-2 ml-2" data-dismiss="modal">ASK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card col-sm-12 col-md-4 col-lg-3 mx-auto" data-toggle="modal" data-target="#upcoming_event3">
+                <img class="card-img-top mt-3 hvr-grow" src="./img/cars/paganizonda.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title ">Pagani Zonda</h4>
+                    <p class="card-text">Per day: $450</p>
+                </div>
+            </div>
+
+            <div class="modal fade" id="upcoming_event3" tabindex="-1" role="dialog" aria-labelledby="upcoming_event3_label" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title mx-auto" id="upcoming_event3_label">Pagani Zonda</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="./img/cars/paganizonda_modal.jpg" alt="modal-img" class="modal_img">
+                            <h5 class="ml-4 mt-3">Owner: Dong-ha</h5>
+                            <!--                                add tooltip with img-->
+<!--
+                            <h5 class="ml-4 mt-3">Per day: $450</h5>
+                        </div>
+                        <div class="modal-footer">
+
+                            <div class="row">
+                                <p style="margin-right: auto;">Ask Dong-ha for availability</p>
+                                <button type="button" class="btn btn-secondary my-auto mr-2 ml-2" data-dismiss="modal">ASK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
